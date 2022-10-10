@@ -1,0 +1,115 @@
+call plug#begin('~/.local/share/nvim/plugged')
+ Plug 'davidhalter/jedi-vim'
+ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+ Plug 'zchee/deoplete-jedi'
+ Plug 'vim-airline/vim-airline'
+ Plug 'vim-airline/vim-airline-themes'
+ Plug 'jiangmiao/auto-pairs'
+ Plug 'scrooloose/nerdcommenter'
+ Plug 'scrooloose/nerdtree'
+ Plug 'neomake/neomake'
+ Plug 'dracula/vim'
+ Plug 'ryanoasis/vim-devicons'
+ Plug 'SirVer/ultisnips'
+ Plug 'honza/vim-snippets'
+ Plug 'mhinz/vim-startify'
+ Plug 'ryanoasis/vim-devicons'
+ Plug 'tpope/vim-fugitive'
+ Plug 'vimwiki/vimwiki'
+ Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+call plug#end()
+
+" Deoplete set-up
+let g:deoplete#enable_at_startup = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" Airline set up
+let g:airline_theme='simple' 
+" Neomake set up
+let g:neomake_python_enabled_makers = ['pylint']
+
+nnoremap <silent> <C-k><C-B> :NERDTreeToggle<CR>
+
+
+" color schemes
+ if (has("termguicolors"))
+ set termguicolors
+ endif
+ syntax enable
+colorscheme dracula
+
+" open new split panes to right and below
+set splitright
+set splitbelow
+
+  
+inoremap jk <Esc>
+ 
+ " Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+set number
+set spelllang=en_gb
+set tabstop=2
+set mouse=n
+
+let mapleader =" "
+map <leader>o :setlocal spell! <CR>
+nnoremap wq :wq
+nnoremap quit :q!
+nnoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
+nnoremap <leader>c :noh<CR><Esc>
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap oo o<Esc>
+nnoremap <leader>pdf :w<CR>: !latexmk -cd -e -f -xelatex -interaction=nonstopmode -synctex=1 "<C-r>%"
+nnoremap <leader>b :w<CR>: !brave-browser %<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-n> :vertical resize -5<CR>
+nnoremap <C-b> :vertical resize +5<CR>
+vnoremap <leader>cp "+y
+
+
+autocmd BufNewFile,BufFilePre,BufRead *.hs,*.lhs set filetype=haskell
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+autocmd BufNewFile,BufFilePre,BufRead *.tex set filetype=tex
+autocmd BufNewFile,BufFilePre,BufRead *.go set filetype=go
+autocmd BufNewFile,BufFilePre,BufRead *.html set filetype=html
+
+" HTML
+set shiftwidth=0
+
+"" GO
+autocmd FileType go set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+"MARKDOWN
+autocmd FileType markdown set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
+autocmd FileType markdown inoremap ;b <Enter><Tab>-<Space>
+autocmd FileType markdown inoremap ;1 #<Space><Enter><++><Esc>kA
+autocmd FileType markdown inoremap ;2 ##<Space><Enter><++><Esc>kA
+autocmd FileType markdown inoremap ;3 ###<Space><Enter><++><Esc>kA
+autocmd FileType markdown inoremap ;i ![](<++>)<++><Esc>F[a
+autocmd FileType markdown inoremap ;a [](<++>)<++><Esc>F[a
+autocmd FileType markdown inoremap ;sup <sup></sup><Space><++><Esc>FsT>i
+autocmd FileType markdown inoremap ;sub <sub></sub><Space><++><Esc>FsT>i
+autocmd FileType markdown inoremap ;bold ****<++><Esc>F*hi
+autocmd FileType markdown inoremap ;e **<++><Esc>F*i
+autocmd FileType markdown inoremap ;mm $$<++><Esc>F$i
+
+
+"HASKELL
+autocmd FileType haskell set expandtab
+
+"LATEX
+autocmd FileType tex set syntax=tex
+autocmd FileType tex inoremap ;; \
+autocmd FileType tex inoremap ;m $$<Esc>F$i
+autocmd FileType tex inoremap ;\ \textbackslash{}
+autocmd FileType tex inoremap ;~ \textasciitilde{}

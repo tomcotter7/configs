@@ -1,0 +1,37 @@
+# actual aliases
+alias weather='curl wttr.in'
+alias zaread='~/zaread/zaread'
+alias monerow='./monero-x86_64-linux-gnu-v0.17.3.0/monero-wallet-cli'
+alias speedtest='./speedtest/speedtest'
+
+# crypto prices
+alias xmr='function _xmr()
+{
+		curl gbp.rate.sx/xmr@$1
+};_xmr'
+alias crypto='curl gbp.rate.sx'
+
+alias eth='function _eth()
+{
+		curl gbp.rate.sx/eth@$1
+};_eth'
+
+alias ada='function _ada()
+{
+		curl gbp.rate.sx/ada@$1
+};_ada'
+
+alias convertxmr='function _convertxmr()
+{
+		curl xmr.rate.sx/$1gbp
+};_convertxmr'
+
+
+# utility functions
+alias hacksoc-cal="curl -s https://hacksocnotts.co.uk/events/index.json | jq '.data[] | select (.date > (now | strftime(\"%Y-%m-%d\")) and .date != \"<no value>\")'"
+
+alias math-help='function _mathhelp()
+{
+	cat ./Documents/markdown_math_cheatsheet.md | grep $1
+};_mathhelp'
+
